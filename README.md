@@ -1,6 +1,8 @@
 # Simple Folder Backup
 
-A lightweight Windows desktop application for automated folder backups with intelligent change detection. Runs as a system tray application with configurable schedules and automatic cleanup. I built this to copy Steam dedicated server files to a Dropbox folder, since cloud saves usually aren't enabled with servers like that. (Palworld, 7 Days to Die, etc.)
+A lightweight Windows desktop application for automated folder backups with intelligent change detection. Runs as a system tray application with configurable schedules and automatic cleanup. I built this to copy Steam dedicated server files to a Dropbox folder, since cloud saves usually aren't enabled with servers like that. (Palworld, 7 Days to Die, etc.) 
+
+If you're looking to quickly download the tool, visit https://github.com/chadsten/simple-folder-backup/releases.
 
 ## Features
 
@@ -89,6 +91,9 @@ Logs are stored in the `logs/` directory:
 - Windows (tested on Windows 10/11)
 - Write access to source and destination folders
 - Sufficient disk space for backups
+
+## Download
+If you just want to use the tool, download the latest .exe file at https://github.com/chadsten/simple-folder-backup/releases. Everything below this is for people interested in the code itself.
 
 ## Building from Source
 
