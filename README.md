@@ -1,4 +1,4 @@
-# Folder Backup Tool
+# Simple Folder Backup
 
 A lightweight Windows desktop application for automated folder backups with intelligent change detection. Runs as a system tray application with configurable schedules and automatic cleanup. I built this to copy Steam dedicated server files to a Dropbox folder, since cloud saves usually aren't enabled with servers like that. (Palworld, 7 Days to Die, etc.)
 
