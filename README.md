@@ -2,8 +2,6 @@
 
 A lightweight Windows desktop application for automated folder backups with intelligent change detection. Runs as a system tray application with configurable schedules and automatic cleanup. I built this to copy Steam dedicated server files to a Dropbox folder, since cloud saves usually aren't enabled with servers like that. (Palworld, 7 Days to Die, etc.) 
 
-If you're looking to quickly download the tool, visit https://github.com/chadsten/simple-folder-backup/releases.
-
 ## Features
 
 - **Automated Backups**: Schedule regular backups with customizable intervals
@@ -16,7 +14,7 @@ If you're looking to quickly download the tool, visit https://github.com/chadste
 
 ## Quick Start
 
-1. **Download** the `SimpleFolderBackup.exe` from the releases
+1. **Download** the `SimpleFolderBackup.exe` from the releases (https://github.com/chadsten/simple-folder-backup/releases)
 2. **Run** the executable - it will create a default `config.json`
 3. **Configure** your backup sources and destinations in `config.json`
 4. **Restart** the application to load your configuration
