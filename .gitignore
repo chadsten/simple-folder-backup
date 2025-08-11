@@ -1,0 +1,155 @@
+# =============================================================================
+# GOLANG
+# =============================================================================
+
+# Compiled binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Go module proxy cache
+go.sum
+
+# Dependency directories (vendor mode)
+vendor/
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
+
+# Environment variables (CRITICAL - contains passwords, tokens, API keys)
+.env
+.env*
+
+# Configuration files that might contain secrets
+secrets.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# =============================================================================
+# LOGS & TEMPORARY FILES
+# =============================================================================
+
+# Log files
+*.log
+logs/
+*.log.*
+
+# Temporary folders
+tmp/
+temp/
+.tmp/
+
+# =============================================================================
+# EDITOR & IDE FILES
+# =============================================================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# WebStorm/IntelliJ
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+.#*
+\#*#
+
+# =============================================================================
+# OPERATING SYSTEM FILES
+# =============================================================================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =============================================================================
+# PROJECT-SPECIFIC
+# =============================================================================
+
+# Claude AI Assistant files
+.claude/
+claude-logs/
+CLAUDE.md
+
+# Go build outputs and resources
+dist/
+build/
+*.syso
+app.rc
+rsrc.syso
+*.lock
+
+# Database files (if any)
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files and application data
+*.bak
+*.backup
+hashes.json
+config.json
+
+# =============================================================================
+# SECURITY-SENSITIVE FILES
+# =============================================================================
+
+# Any file containing tokens, passwords, or API keys
+*token*
+*password*
+*secret*
+*key*
+*credentials*
+
+# Except allow these specific files (they're examples/templates)
+!.env.example
+!config.json.example
