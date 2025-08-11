@@ -23,6 +23,9 @@ import (
 	"github.com/getlantern/systray"
 )
 
+// statusUpdateChan signals when system tray menu should update immediately
+var statusUpdateChan = make(chan struct{}, 1)
+
 // main initializes the backup tool with single instance enforcement and system tray integration.
 //
 // Single instance enforcement is critical for this application because:
@@ -32,12 +35,12 @@ import (
 // 4. Log files could become corrupted with concurrent writes
 func main() {
 	// Enforce single instance before any other initialization to prevent race conditions
-	lockFile, err := acquireInstanceLock()
+	mutex, err := acquireMutex()
 	if err != nil {
-		showMessageBox("Backup Tool", "Another instance is already running.\n\nPlease close the existing instance before starting a new one.")
+		showMessageBox("SimpleFolderBackup", "Another instance is already running.\n\nPlease close the existing instance before starting a new one.")
 		os.Exit(1)
 	}
-	defer releaseInstanceLock(lockFile)
+	defer mutex.release()
 
 	// Initialize system logger first (clears previous session log for fresh start)
 	// System logger captures application-level events vs per-backup operational logs
@@ -119,13 +122,18 @@ func onReady() {
 		}
 	}
 	
+	// updateMenuStatus updates both menu items with current status
+	updateMenuStatus := func() {
+		mLastBackup.SetTitle(backupStatus.getLastBackupStatus())
+		mNextBackup.SetTitle(backupStatus.getNextBackupStatus())
+	}
+	
 	// Brief delay to allow schedulers to initialize before displaying status
 	time.Sleep(100 * time.Millisecond)
-	mLastBackup.SetTitle(backupStatus.getLastBackupStatus())
-	mNextBackup.SetTitle(backupStatus.getNextBackupStatus())
+	updateMenuStatus()
 	
 	// Start status update goroutine with 30-second refresh interval
-	// Frequent enough for user awareness, infrequent enough to avoid performance impact
+	// Also listens for immediate updates when backup actions complete
 	go func() {
 		ticker := time.NewTicker(30 * time.Second)
 		defer ticker.Stop()
@@ -134,8 +142,9 @@ func onReady() {
 			case <-ctx.Done():
 				return
 			case <-ticker.C:
-				mLastBackup.SetTitle(backupStatus.getLastBackupStatus())
-				mNextBackup.SetTitle(backupStatus.getNextBackupStatus())
+				updateMenuStatus()
+			case <-statusUpdateChan:
+				updateMenuStatus()
 			}
 		}
 	}()
@@ -167,47 +176,3 @@ func onExit() {
 	fmt.Println("Application exiting...")
 }
 
-// acquireInstanceLock creates an exclusive lock file to enforce single instance operation.
-//
-// Uses OS-level file locking with O_EXCL flag to atomically check-and-create the lock file.
-// This approach works across all platforms and prevents race conditions between multiple
-// startup attempts. The PID is written to the lock file for debugging purposes to identify
-// which process holds the lock if manual cleanup is ever needed.
-//
-// Returns the lock file handle that must be passed to releaseInstanceLock for cleanup.
-func acquireInstanceLock() (*os.File, error) {
-	lockFilePath := "backup-tool.lock"
-	
-	// Use O_EXCL with O_CREATE for atomic test-and-set behavior
-	// If file exists, this fails immediately without race conditions
-	lockFile, err := os.OpenFile(lockFilePath, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
-	if err != nil {
-		if os.IsExist(err) {
-			return nil, fmt.Errorf("lock file exists - another instance may be running")
-		}
-		return nil, fmt.Errorf("failed to create lock file: %v", err)
-	}
-	
-	// Write current process ID for debugging/manual cleanup if needed
-	_, err = fmt.Fprintf(lockFile, "%d\n", os.Getpid())
-	if err != nil {
-		// If we can't write PID, clean up lock file to prevent permanent lock
-		lockFile.Close()
-		os.Remove(lockFilePath)
-		return nil, fmt.Errorf("failed to write to lock file: %v", err)
-	}
-	
-	return lockFile, nil
-}
-
-// releaseInstanceLock cleans up the instance lock file created by acquireInstanceLock.
-//
-// This is critical for proper application shutdown - without cleanup, the lock file
-// would persist and prevent future application starts. The function is defensive
-// and safe to call with a nil lock file handle.
-func releaseInstanceLock(lockFile *os.File) {
-	if lockFile != nil {
-		lockFile.Close()
-		os.Remove(lockFile.Name())
-	}
-}

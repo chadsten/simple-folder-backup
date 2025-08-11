@@ -40,6 +40,12 @@ func executeBackup(config BackupConfig, logger *log.Logger) error {
 			}
 			// Update status as if backup completed (for scheduling purposes)
 			backupStatus.updateBackupCompleted(config.Name, config.ScheduleMinutes)
+			
+			// Trigger immediate UI update
+			select {
+			case statusUpdateChan <- struct{}{}:
+			default:
+			}
 			return nil
 		}
 	}
@@ -88,6 +94,12 @@ func performBackup(config BackupConfig, logger *log.Logger) error {
 	
 	// Step 4: Update status tracking for UI display (only after successful backup)
 	backupStatus.updateBackupCompleted(config.Name, config.ScheduleMinutes)
+	
+	// Trigger immediate UI update
+	select {
+	case statusUpdateChan <- struct{}{}:
+	default:
+	}
 	
 	// Step 5: Record successful backup in hash manager for future skip decisions
 	if config.IsHashCheckEnabled() {
