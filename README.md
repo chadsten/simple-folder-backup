@@ -141,7 +141,6 @@ Adjust `log_retention_days` to control how long backup logs are kept. Set to hig
 ### "Another Instance Running" Message
 - Close existing instance from system tray before starting new one
 - If no tray icon visible, check Task Manager for `SimpleFolderBackup.exe` process
-- Delete `backup-tool.lock` file if process crashed
 
 ## License
 
