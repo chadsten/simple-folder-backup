@@ -88,33 +88,11 @@ Logs are stored in the `logs/` directory:
 
 ## Requirements
 
-- Windows (tested on Windows 10/11)
-- Write access to source and destination folders
+- Windows 11 (probably works on 10, untested)
 - Sufficient disk space for backups
 
 ## Download
-If you just want to use the tool, download the latest .exe file at https://github.com/chadsten/simple-folder-backup/releases. Everything below this is for people interested in the code itself.
-
-## Building from Source
-
-Requirements:
-- Go 1.24+
-- Windows (for icon embedding)
-
-```bash
-# Clone repository
-git clone <repository-url>
-cd folder-backup-tool
-
-# Install rsrc for icon embedding
-go install github.com/akavel/rsrc@latest
-
-# Compile icon resource
-rsrc -ico icon.ico -o rsrc.syso
-
-# Build executable
-go build -ldflags "-H=windowsgui -s -w" -o backup-tool.exe
-```
+Visit https://github.com/chadsten/simple-folder-backup/releases to download the latest .exe.
 
 ## Advanced Usage
 
