@@ -7,7 +7,7 @@ If you're looking to quickly download the tool, visit https://github.com/chadste
 ## Features
 
 - **Automated Backups**: Schedule regular backups with customizable intervals
-- **Hash-Based Change Detection**: Skip backups when content hasn't changed, saving time and storage
+- **Hash-Based Change Detection**: Skip backups when content hasn't changed, making each backup in the retention window meaningful
 - **System Tray Interface**: Unobtrusive desktop application with real-time status updates
 - **Multiple Backup Configs**: Support for backing up multiple folders with different schedules
 - **Automatic Cleanup**: Configurable retention policies to manage backup storage
