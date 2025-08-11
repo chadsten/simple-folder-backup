@@ -44,16 +44,16 @@ The tool uses a `config.json` file for configuration:
 
 ### Configuration Options
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| `name` | Friendly name for the backup job | Required |
-| `source` | Path to folder to backup | Required |
-| `destination` | Where to store backup folders | Required |
-| `schedule_minutes` | Backup interval in minutes | Required |
-| `rotation_count` | Number of backup folders to keep | Required |
-| `enabled` | Enable/disable this backup job | `true` |
-| `hash_check` | Enable hash-based change detection | `true` |
-| `log_retention_days` | Days to keep log files | `7` |
+| Option | Description |
+|--------|-------------|
+| `name` | Friendly name for the backup job |
+| `source` | Path to folder to backup |
+| `destination` | Where to store backup folders |
+| `schedule_minutes` | Backup interval in minutes |
+| `rotation_count` | Number of backup folders to keep |
+| `enabled` | Enable/disable this backup job |
+| `hash_check` | Enable hash-based change detection |
+| `log_retention_days` | Days to keep log files |
 
 ## How It Works
 
