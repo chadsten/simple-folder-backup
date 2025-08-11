@@ -16,7 +16,7 @@ If you're looking to quickly download the tool, visit https://github.com/chadste
 
 ## Quick Start
 
-1. **Download** the `backup-tool.exe` from the releases
+1. **Download** the `SimpleFolderBackup.exe` from the releases
 2. **Run** the executable - it will create a default `config.json`
 3. **Configure** your backup sources and destinations in `config.json`
 4. **Restart** the application to load your configuration
