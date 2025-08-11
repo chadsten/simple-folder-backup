@@ -1,0 +1,70 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.24'
+
+    - name: Install rsrc for icon embedding
+      run: go install github.com/akavel/rsrc@latest
+
+    - name: Generate Windows resource file
+      run: rsrc -ico icon.ico -o rsrc.syso
+
+    - name: Build Windows executable
+      run: go build -ldflags "-H=windowsgui -s -w" -o SimpleFolderBackup.exe
+
+    - name: Get tag name
+      id: tag
+      run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.tag.outputs.tag }}
+        name: SimpleFolderBackup ${{ steps.tag.outputs.tag }}
+        body: |
+          ## SimpleFolderBackup ${{ steps.tag.outputs.tag }}
+          
+          **Download**: SimpleFolderBackup.exe
+          
+          ### Features:
+          - Automated folder backups with customizable schedules
+          - Hash-based change detection to skip unchanged content
+          - System tray interface with real-time status
+          - Multiple backup configurations support
+          - Automatic cleanup with configurable retention
+          - Detailed logging with automatic rotation
+          
+          ### Requirements:
+          - Windows 10/11
+          - Write access to source and destination folders
+          
+          ### Installation:
+          1. Download SimpleFolderBackup.exe
+          2. Run the executable - it will create a default config.json
+          3. Edit config.json with your backup sources and destinations
+          4. Restart the application
+          
+          The application will run in your system tray and begin automated backups.
+          
+          For detailed configuration and usage instructions, see the [README](https://github.com/${{ github.repository }}/blob/main/README.md).
+        files: |
+          SimpleFolderBackup.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

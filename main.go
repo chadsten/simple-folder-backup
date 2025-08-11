@@ -68,8 +68,8 @@ func main() {
 func onReady() {
 	// Set up system tray appearance
 	systray.SetIcon(iconData)
-	systray.SetTitle("Folder Backup Tool")
-	systray.SetTooltip("Folder Backup Tool - Running")
+	systray.SetTitle("SimpleFolderBackup")
+	systray.SetTooltip("SimpleFolderBackup")
 	
 	// Create status display menu items (disabled = read-only)
 	mLastBackup := systray.AddMenuItem("Last backup: Never", "Last backup time")

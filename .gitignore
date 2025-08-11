@@ -151,5 +151,4 @@ config.json
 *credentials*
 
 # Except allow these specific files (they're examples/templates)
-!.env.example
 !config.json.example
