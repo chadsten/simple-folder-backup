@@ -20,7 +20,7 @@ go.work
 go.work.sum
 
 # Go module proxy cache
-go.sum
+# Note: go.sum should be committed for reproducible builds
 
 # Dependency directories (vendor mode)
 vendor/

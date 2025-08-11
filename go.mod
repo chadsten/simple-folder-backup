@@ -1,4 +1,4 @@
-module palworld-server-backup
+module SimpleFolderBackup
 
 go 1.24.6
 
